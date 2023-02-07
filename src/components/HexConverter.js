@@ -6,13 +6,24 @@ function HexConverter(props) {
     color: '#ffffff',
     message: `rgb(255, 255, 255)`,
   });
+  const inputPlaceholder = "Введите код HEX";
 
   const submitHandler = event => {
     event.preventDefault();
     validateValue(event.target.querySelector('.hexInput').value);
   }
 
-  const inputHandler = event => {
+  const focusHandler = (event) => {
+    event.target.placeholder = '';
+  }
+
+  const blurHandler = (event) => {
+    if (event.target.value === '') {
+      event.target.placeholder = inputPlaceholder;
+    }
+  }
+
+  const changeHandler = event => {
     if (event.target.value.length === 7) {
       validateValue(event.target.value);
     }
@@ -49,8 +60,15 @@ function HexConverter(props) {
   
   return (
     
-    <form className='HexConverterForm' onSubmit={submitHandler} onInput={inputHandler}>
-      <input id="hexInput" name="hexInput" className="hexInput" placeholder={state.color}></input>
+    <form className='HexConverterForm' onSubmit={submitHandler}>
+      <input
+        id="hexInput"
+        name="hexInput"
+        className="hexInput"
+        placeholder={inputPlaceholder}
+        onChange={changeHandler}
+        onFocus={focusHandler}
+        onBlur={blurHandler}></input>
       <span className="currentRGB">{ state.message }</span>
     </form>
   );
