@@ -6,11 +6,12 @@ function HexConverter(props) {
     color: '#ffffff',
     message: `rgb(255, 255, 255)`,
   });
+
   const inputPlaceholder = "Введите код HEX";
 
   const submitHandler = event => {
     event.preventDefault();
-    validateValue(event.target.querySelector('.hexInput').value);
+    validateValue(event.target.hexInput.value);
   }
 
   const focusHandler = (event) => {
@@ -33,10 +34,12 @@ function HexConverter(props) {
   }
 
   const error = () => {
-    setState({
+    setState(prevState => ({
+      ...prevState,
       color: '#EA4B35',
       message: 'Ошибка!',
-    })
+    }));
+    console.log('error отработал:', state);
   }
 
   const hex2rgb = hex => {
@@ -48,14 +51,16 @@ function HexConverter(props) {
   const validateValue = string => {
     const regexp = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
     if (string.match(regexp)) {
-      setState({
+      setState((prevState) => ({
+        ...prevState,
         color: string,
         message: hex2rgb(string),
-      });
+      }));
     } else {
       error();
     }
     applyColor(state.color);
+    console.log('applyColor отработал');
   }
   
   return (
