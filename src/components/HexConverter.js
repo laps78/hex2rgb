@@ -37,9 +37,8 @@ function HexConverter(props) {
     setState(prevState => ({
       ...prevState,
       color: '#EA4B35',
-      message: 'Ошибка!',
+      message: 'Ошибка: Invalid HEX!',
     }));
-    console.log('error отработал:', state);
   }
 
   const hex2rgb = hex => {
@@ -58,9 +57,9 @@ function HexConverter(props) {
       }));
     } else {
       error();
+      string = '#EA4B35';
     }
-    applyColor(state.color);
-    console.log('applyColor отработал');
+    applyColor(string);
   }
   
   return (
